@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/nodejs-22:latest AS build
+FROM registry.access.redhat.com/ubi9/nodejs-22:9.8 AS build
 
 ARG quay_app_api_url=http://localhost:8080
 ENV REACT_QUAY_APP_API_URL=${quay_app_api_url}
@@ -11,7 +11,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm run build
 
-FROM registry.access.redhat.com/ubi9/nodejs-22-minimal:latest
+FROM registry.access.redhat.com/ubi9/nodejs-22-minimal:9.8-1783399267
 
 WORKDIR /opt/app-root
 COPY --from=build /opt/app-root/dist /opt/app-root/dist
